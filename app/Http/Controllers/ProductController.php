@@ -1,27 +1,41 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = DB::table('products')->get();
-        dd($products);
-        return view('products.index');
+        return view('products.index')->with([
+            'products' => Product::all()
+        ]);
     }
     public function create(){
-        return 'this is the form to create a product from Controller';
+        return view('products.create');
     }
     public function store(){
-        //
+        // $product = Product::create([
+        //     'title' => request()->title,
+        //     'description' => request()->description,
+        //     'price' => request()->price,
+        //     'stock' => request()->stock,
+        //     'status' => request()->status,
+        // ]);
+        
+        $product = Product::create(request()->all());
+
+        return $product;
     }
     public function show($product){
         // $product = DB::table('products')->where('id',$product)->first();
-        $product = DB::table('products')->find($product);
-        dd($product);
-        return view('products.show');
+        $product = Product::findOrFail($product);
+        return view('products.show')->with([
+            'product' => $product,
+            'html' => '<a href="#">Hola Baby</a>',
+        ]);
     }
     public function edit($product){
         return "Showing the form to edit the product with id {$product}";

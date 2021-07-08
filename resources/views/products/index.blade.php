@@ -1,33 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Lists of products</title>
-</head>
-<body>
+@extends('layouts.master')
+
+@section('content')
     <h1>List of products</h1>
+
+    @empty($products)
+        
+    <div class="alert alert-warning">
+        The List is empty
+    </div>
+
+    @else
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-light">
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Soap</td>
-                    <td>Best Soap</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Soap</td>
-                    <td>Best soap ever</td>
-                </tr>
-            </thead>
-        </table>
-    </div>
-</body>
-</html>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($products as $obj)
+                    <tr>
+                            <td>{{ $obj->id }}</td>
+                            <td>{{ $obj->title }}</td>
+                            <td>{{ $obj->description }}</td>
+                            <td>{{ $obj->price }}</td>
+                            <td>{{ $obj->stock }}</td>
+                            <td>{{ $obj->status }}</td>
+                        </tr>
+                        @endforeach
+                        
+                    </tbody>
+                </table>
+            </div>
+    @endempty
+    
+@endsection
