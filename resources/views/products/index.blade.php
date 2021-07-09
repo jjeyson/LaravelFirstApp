@@ -3,6 +3,7 @@
 @section('content')
     <h1>List of products</h1>
 
+    <a class="btn btn-success" href="{{ route('products.create')}}">Create</a>
     @empty($products)
         
     <div class="alert alert-warning">
@@ -31,6 +32,19 @@
                             <td>{{ $obj->price }}</td>
                             <td>{{ $obj->stock }}</td>
                             <td>{{ $obj->status }}</td>
+                            <td>
+                                <a class="btn btn-success" href="{{ route('products.show',['product' => $obj->id])}}">Show</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-success" href="{{ route('products.edit', ['product' => $obj->id])}}">Edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('products.destroy', ['product' => $obj->id])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-link">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                         

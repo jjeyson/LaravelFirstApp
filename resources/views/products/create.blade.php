@@ -3,11 +3,11 @@
 @section('content')
     <h1>Create a product</h1>
 
-    <form action="{{ route('products.store')}}" method="post">
+    <form action="{{ route('products.update')}}" method="post">
         @csrf
         <div class="form-row">
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" class="form-control">
+            <input type="text" name="title" id="title" class="form-control" required>
         </div>
         <div class="form-row">
             <label for="description">Description</label>
