@@ -1,9 +1,10 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
+<div class="container-fluid">
     <h1>List of products</h1>
 
-    <a class="btn btn-success" href="{{ route('products.create')}}">Create</a>
+    <a class="btn btn-primary mb-3" href="{{ route('products.create')}}">Create</a>
     @empty($products)
         
     <div class="alert alert-warning">
@@ -33,16 +34,16 @@
                             <td>{{ $obj->stock }}</td>
                             <td>{{ $obj->status }}</td>
                             <td>
-                                <a class="btn btn-success" href="{{ route('products.show',['product' => $obj->id])}}">Show</a>
+                                <a class="btn btn-info" href="{{ route('products.show',['product' => $obj->id])}}">Show</a>
                             </td>
                             <td>
-                                <a class="btn btn-success" href="{{ route('products.edit', ['product' => $obj->id])}}">Edit</a>
+                                <a class="btn btn-warning" href="{{ route('products.edit', ['product' => $obj->id])}}">Edit</a>
                             </td>
                             <td>
-                                <form action="{{ route('products.destroy', ['product' => $obj->id])}}" method="post">
+                                <form class="d-inline" action="{{ route('products.destroy', ['product' => $obj->id])}}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-link">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -51,6 +52,7 @@
                     </tbody>
                 </table>
             </div>
+</div>
     @endempty
     
 @endsection

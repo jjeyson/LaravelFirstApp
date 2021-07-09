@@ -1,6 +1,7 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
 @section('content')
+<div class="container-fluid">
     <h1>Edit a Product</h1>
     <form action="{{ route('products.update', ['product' => $product->id])}}" method="post">
         @csrf
@@ -36,8 +37,9 @@
                 </option>
             </select>
         </div>
-        <div class="form-row">
-            <button type="submit" class="btn btn-primary btn-lg">Create</button>
+        <div class="form-row mt-3">
+            <button type="submit" class="btn btn-success btn-lg">Save</button>
         </div>
     </form>
+</div>
 @endsection
