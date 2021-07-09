@@ -3,7 +3,7 @@
 @section('content')
     <h1>Create a product</h1>
 
-    <form action="{{ route('products.update')}}" method="post">
+    <form action="{{ route('products.create')}}" method="post">
         @csrf
         <div class="form-row">
             <label for="title">Title</label>
