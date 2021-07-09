@@ -27,10 +27,10 @@ class ProductController extends Controller
         ];
         request()->validate($rules);
 
-        if (request()->status == 'Unavailable' && request()->stock == 0) {
+        if (request()->status == 'Available' && request()->stock == 0) {
             // session()->put('error','If available must have stock');
             session()->flash('error','If available must have stock');
-            return redirect()->back();
+            return redirect()->back()->withInput(request()->all());
         }
         session()->forget('error');
         $product = Product::create(request()->all());
