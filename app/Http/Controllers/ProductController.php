@@ -17,17 +17,17 @@ class ProductController extends Controller
         return view('products.create');
     }
     public function store(){
-        // $product = Product::create([
-        //     'title' => request()->title,
-        //     'description' => request()->description,
-        //     'price' => request()->price,
-        //     'stock' => request()->stock,
-        //     'status' => request()->status,
-        // ]);
-        
+        if (request()->status == 'Available' && request()->stock == 0) {
+            // session()->put('error','If available must have stock');
+            session()->flash('error','If available must have stock');
+            return redirect()->back();
+        }
+        session()->forget('error');
         $product = Product::create(request()->all());
 
-        return $product;
+        // return redirect()->back();
+        // return redirect()->action('MainController@index');
+        return redirect()->route('products.index');
     }
     public function show($product){
         // $product = DB::table('products')->where('id',$product)->first();
@@ -45,11 +45,11 @@ class ProductController extends Controller
     public function update($product){
         $product = Product::findOrFail($product);
         $product->update(request()->all());
-        return $product;
+        return redirect()->route('products.index');
     }
     public function destroy($product){
         $product = Product::findOrFail($product);
         $product->delete();
-        return $product;
+        return redirect()->route('products.index');
     }
 }
