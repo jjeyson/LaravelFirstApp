@@ -23,11 +23,11 @@ class ProductController extends Controller
             'description' => ['required', 'max:1000'],
             'price' => ['required', 'min:1'],
             'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
+            'status' => ['required', 'in:Available,Unavailable'],
         ];
         request()->validate($rules);
 
-        if (request()->status == 'Available' && request()->stock == 0) {
+        if (request()->status == 'Unavailable' && request()->stock == 0) {
             // session()->put('error','If available must have stock');
             session()->flash('error','If available must have stock');
             return redirect()->back();
@@ -58,7 +58,7 @@ class ProductController extends Controller
             'description' => ['required', 'max:1000'],
             'price' => ['required', 'min:1'],
             'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
+            'status' => ['required', 'in:Available,Unavailable'],
         ];
         request()->validate($rules);
         $product = Product::findOrFail($product);
