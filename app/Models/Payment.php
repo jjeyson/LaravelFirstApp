@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'amount',
         'payed_at',
@@ -18,5 +20,7 @@ class Payment extends Model
      *
      * @var array
      */
-    protected $dates = [];
+    protected $dates = [
+        'payed_at'
+    ];
 }

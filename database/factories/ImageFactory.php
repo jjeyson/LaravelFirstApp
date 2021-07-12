@@ -21,8 +21,15 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
+        $filename = $this->faker->numberBetween(1,10).'.jpg';
         return [
-            //
+            'path' => "img/products/{$filename}"
         ];
+    }
+    public function ofUser(){
+        $filename = $this->faker->numberBetween(1,5).'.jpg';
+        return $this->state([
+            'path' => "img/users/{$filename}"
+        ]);
     }
 }
