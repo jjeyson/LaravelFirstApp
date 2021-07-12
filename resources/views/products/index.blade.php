@@ -34,7 +34,7 @@
                             <td>{{ $obj->stock }}</td>
                             <td>{{ $obj->status }}</td>
                             <td>
-                                <a class="btn btn-info" href="{{ route('products.show',['product' => $obj->id])}}">Show</a>
+                                <a class="btn btn-info" href="{{ route('products.show',['product' => $obj->title])}}">Show</a>
                             </td>
                             <td>
                                 <a class="btn btn-warning" href="{{ route('products.edit', ['product' => $obj->id])}}">Edit</a>

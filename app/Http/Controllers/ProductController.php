@@ -44,20 +44,20 @@ class ProductController extends Controller
             ->withSuccess("The new product with id {$product->id} was created");
             // ->with('success'=>"The new product with id {$product->id} was created");
     }
-    public function show($product){
+    public function show(Product $product){
         // $product = DB::table('products')->where('id',$product)->first();
-        $product = Product::findOrFail($product);
+        // $product = Product::findOrFail($product);
         return view('products.show')->with([
             'product' => $product,
             'html' => '<a href="#">Hola Baby</a>',
         ]);
     }
-    public function edit($product){
+    public function edit(Product $product){
         return view('products.edit')->with([
-            'product' => Product::findOrFail($product),
+            'product' => $product,
         ]);
     }
-    public function update($product){
+    public function update(Product $product){
         $rules = [
             'title' => ['required', 'max:255'],
             'description' => ['required', 'max:1000'],
@@ -66,13 +66,12 @@ class ProductController extends Controller
             'status' => ['required', 'in:Available,Unavailable'],
         ];
         request()->validate($rules);
-        $product = Product::findOrFail($product);
         $product->update(request()->all());
         return redirect()->route('products.index')
         ->withSuccess("The product with id {$product->id} was edited");;
     }
-    public function destroy($product){
-        $product = Product::findOrFail($product);
+    public function destroy(Product $product){
+        // $product = Product::findOrFail($product);
         $product->delete();
         return redirect()->route('products.index')
                 ->withSuccess("The product with id {$product->id} was deleted");

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container-fluid">
     <h1>Create a product</h1>
 
     <form action="{{ route('products.store')}}" method="post">
@@ -11,7 +12,7 @@
         </div>
         <div class="form-row">
             <label for="description">Description</label>
-            <textarea name="description" id="description" cols="30" rows="10" >{{ old('description')}}</textarea>
+            <textarea name="description" id="description"  class="form-control">{{ old('description') }}</textarea>
         </div>
         <div class="form-row">
             <label for="price">Price</label>
@@ -33,4 +34,5 @@
             <button type="submit" class="btn btn-primary btn-lg">Create</button>
         </div>
     </form>
+</div>
 @endsection
