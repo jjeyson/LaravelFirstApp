@@ -26,7 +26,7 @@ class ImageFactory extends Factory
             'path' => "img/products/{$filename}"
         ];
     }
-    public function ofUser(){
+    public function user(){
         $filename = $this->faker->numberBetween(1,5).'.jpg';
         return $this->state([
             'path' => "img/users/{$filename}"
