@@ -16,4 +16,20 @@ class Product extends Model
         'stock',
         'status'
     ];
+    public function carts()
+    {
+        return $this->morphedByMany(Cart::class,'productable')->withPivot('quantity');
+        // return $this->belongsToMany(Cart::class)->withPivot('quantity');
+    }
+
+    public function orders()
+    {
+        return $this->morphedByMany(Order::class,'productable')->withPivot('quantity');
+        // return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class,'imageable');
+    }
 }

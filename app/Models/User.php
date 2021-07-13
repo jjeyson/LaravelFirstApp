@@ -20,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'admin_since'
+        //'admin_since'
     ];
 
     /**
@@ -50,4 +50,19 @@ class User extends Authenticatable
     protected $dates = [
         'admin_since',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasOneThrough(Payment::class, Order::class, 'customer_id');
+    }
+    
+    public function image()
+    {
+        return $this->morphOne(Image::class,'imageable');
+    }
 }
