@@ -17,6 +17,8 @@ Route::get('/', 'MainController@index')->name('main');
 
 Route::resource('products','ProductController');
 
+Route::resource('products.carts', 'ProductCartController');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
