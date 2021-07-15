@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
@@ -51,9 +52,17 @@ class OrderController extends Controller
                 ->products
                 ->mapWithKeys( function ($product)
                 {
-                    $obj[$product->id] = ['quantity' => $product->pivot->quantity];
-                    return $obj;
-                });
+                    $quantity = $product->pivot->quantity;
+                    if ($product->stock < $quantity) {
+                        throw ValidationException::withMessages([
+                            'product' => "There is not enought stock for the quantity you required of {
+                                $product->title}",]);
+                            }
+                            
+                            $product->decrement('stock',$quantity);
+                            $obj[$product->id] = ['quantity' => $quantity];
+                            return $obj;
+                        });
             $order->products()->attach($cartProductsWithQuantity->toArray());
 
             return redirect()->route('orders.payments.create',['order' => $order]);

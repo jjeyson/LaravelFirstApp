@@ -6,7 +6,14 @@ use App\Models\Cart;
 
 class CartService
 {
-    protected $cookieName = "cookie";
+    protected $cookieName;
+    protected $cookieExpiration;
+
+    public function __construct()
+    {
+        $this->cookieName = config('cart.cookie.name');
+        $this->cookieExpiration = config('cart.cookie.expiration');
+    }
 
     public function getFromCookie()
     {
@@ -25,7 +32,7 @@ class CartService
 
     public function makeCookie(Cart $cart)
     {
-        return Cookie::make($this->cookieName,$cart->id, 7*24*60);
+        return Cookie::make($this->cookieName,$cart->id, $this->cookieExpiration);
     }
 
     public function countProducts()
