@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 
 class ProductCartController extends Controller
 {
-    
+    public $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -19,7 +25,8 @@ class ProductCartController extends Controller
      */
     public function store(Request $request, Product $product)
     {
-        $cart = $this->getFromCookieOrCreate();
+        
+        $cart = $this->cartService->getFromCookieOrCreate();
 
         $quantity = $cart->products()
             ->find($product->id)
@@ -31,7 +38,7 @@ class ProductCartController extends Controller
         ]);
 
         // $cookie = cookie()->make('cart',$cart->id, 7*24*60);
-        $cookie = Cookie::make('cart',$cart->id, 7*24*60);
+        $cookie = $this->cartService->makeCookie($cart);
 
         return redirect()->back()->cookie($cookie);
     }
@@ -45,16 +52,10 @@ class ProductCartController extends Controller
      */
     public function destroy(Product $product, Cart $cart)
     {
-        //
-    }
+        $cart->products()->detach($product->id);
 
-    public function getFromCookieOrCreate()
-    {
-        // $cartId = cookie()->get('cart');
-        $cartId = Cookie::get('cart');
+        $this->cartService->makeCookie($cart);
 
-        $cart = Cart::find($cartId);
-
-        return $cart ?? Cart::create();
+        return redirect()->back();
     }
 }

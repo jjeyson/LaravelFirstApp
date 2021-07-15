@@ -56,6 +56,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map(){
         $this->mapApiRoutes();
         $this->mapWebRoutes();
+
+        $this->mapPanelRoutes();
     }
 
     
@@ -65,6 +67,18 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
+    }
+    /**
+     * Configure the "admin Panel" routes for the application.
+     *
+     * @return void
+     */
+    protected function mapPanelRoutes()
+    {
+        Route::prefix('panel')
+                ->middleware(['web','auth','is.admin'])
+                ->namespace("{$this->namespace}\Panel")
+                ->group(base_path('routes/panel.php'));
     }
 
     protected function mapWebRoutes()
