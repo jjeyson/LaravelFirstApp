@@ -8,6 +8,7 @@
             No products yet!
         </div>
     @else
+        {{-- @dump($products) --}}
         <div class="row">
             @foreach ($products as $product)
                 <div class="col-3">
@@ -15,6 +16,9 @@
                 </div>
             @endforeach
         </div>
+        {{-- @dump($products) --}}
+
+        {{-- @dd(\DB::getQueryLog()); --}}
     @endempty
     <p>Let's go</p>
 </div>

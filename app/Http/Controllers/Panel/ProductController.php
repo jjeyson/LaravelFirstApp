@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\PanelProduct;
 use App\Scopes\AvailableScope;
-use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('products.index')->with([
-            'products' => PanelProduct::all()
+            'products' => PanelProduct::without('images')->get()
         ]);
     }
     public function create(){

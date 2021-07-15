@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Services\CartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderPaymentController extends Controller
 {
@@ -37,7 +38,8 @@ class OrderPaymentController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-        //PaymentService__handle
+        DB::transaction(function () use($order) {
+            //PaymentService__handle
         $this->cartService->getFromCookie()->products()->detach();
 
         $order->payment()->create([
@@ -51,6 +53,7 @@ class OrderPaymentController extends Controller
         return redirect()
             ->route('main')
             ->withSuccess("Thanks! Your payment for \$ {$order->total} was successful");
+        });
     }
 
     
