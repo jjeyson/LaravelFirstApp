@@ -49,11 +49,10 @@ class OrderPaymentController extends Controller
 
         $order->status = 'payed';
         $order->save();
-
         return redirect()
-            ->route('main')
+            ->route('index')
             ->withSuccess("Thanks! Your payment for \$ {$order->total} was successful");
-        });
+        }, 5);
     }
 
     

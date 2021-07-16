@@ -28,11 +28,11 @@ class ProductCartController extends Controller
     {
         
         $cart = $this->cartService->getFromCookieOrCreate();
-
         $quantity = $cart->products()
-            ->find($product->id)
-            ->pivot
-            ->quantity ?? 0;
+        ->find($product->id)
+        ->pivot
+        ->quantity ?? 0;
+        
         if ($product->stock < $quantity +1) {
             throw ValidationException::withMessages([
                 'product' => "There is not enought stock for the quantity you required of {
@@ -44,10 +44,9 @@ class ProductCartController extends Controller
         $cart->products()->syncWithoutDetaching([
             $product->id => ['quantity' => $quantity + 1],
         ]);
-
+        
         // $cookie = cookie()->make('cart',$cart->id, 7*24*60);
         $cookie = $this->cartService->makeCookie($cart);
-
         return redirect()->back()->cookie($cookie);
     }
 
