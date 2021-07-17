@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <h1>Create a product</h1>
 
-    <form action="{{ route('products.store')}}" method="post">
+    <form action="{{ route('products.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
             <label for="title">Title</label>
@@ -29,6 +29,18 @@
                 <option {{ old('status')=='Available' ? 'selected' : ''}} value="Available" >Available</option>
                 <option {{ old('status')=='Unavailable' ? 'selected' :''}} value="Unavailable" >Unavailable</option>
             </select>
+        </div>
+        <div class="formrow">
+            <label>{{ __('Image') }}</label>
+
+            <div class="col-md-6">
+                <div class="custom-file">
+                    <input type="file" accept="image/*" name="images[]" class="custom-file-input" multiple>
+                    <label class="custom-file-label">
+                        Product image...
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="form-row">
             <button type="submit" class="btn btn-primary btn-lg">Create</button>

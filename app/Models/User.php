@@ -40,16 +40,17 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'admin_since' => 'datetime',
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'admin_since',
-    ];
+    // /**
+    //  * The attributes that should be mutated to dates.
+    //  *
+    //  * @var array
+    //  */
+    // protected $dates = [
+    //     'admin_since',
+    // ];
 
     public function orders()
     {

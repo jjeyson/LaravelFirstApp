@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\PanelProduct;
 use App\Scopes\AvailableScope;
-
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -26,6 +26,11 @@ class ProductController extends Controller
         $product = PanelProduct::create($request->all());
         // dd(request()->all(), $request->all(), $request->validated());
         // session()->flash('success',"The new product with id {$product->id} was created");
+        foreach ($request->images as $image) {
+            $product->images()->create([
+                'path' => 'images/'. $image->store('products','images')
+            ]);
+        }
         return redirect()->route('products.index')
             ->withSuccess("The new product with id {$product->id} was created");
             // ->with('success'=>"The new product with id {$product->id} was created");
@@ -44,7 +49,22 @@ class ProductController extends Controller
         ]);
     }
     public function update( ProductRequest $request, PanelProduct $product){
-        $product->update($request->all());
+        $product->update($request->validated());
+
+        if ($request->hasFile('images')) {
+            foreach ($product->images as $image) {
+                $path = storage_path("app/public/{$image->path}");
+                File::delete($path);
+
+                $image->delete();
+            }
+            foreach ($request->images as $image) {
+                $product->images()->create([
+                    'path' => 'images/'. $image->store('products','images')
+                ]);
+            }
+        }
+
         return redirect()->route('products.index')
         ->withSuccess("The product with id {$product->id} was edited");;
     }
